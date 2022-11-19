@@ -17,7 +17,7 @@ const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        logoutAction(state, action) {
+        logoutAction(state) {
             state.accessToken = null;
             state.refreshToken = null;
             state.user =  null;
