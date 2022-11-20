@@ -1,7 +1,8 @@
 import React from 'react'
+import { HomepageXX } from '../xx/homepage'
 
 export function HomeComponent() {
   return (
-    <div>HomeComponent</div>
+    <HomepageXX></HomepageXX>
   )
 }
