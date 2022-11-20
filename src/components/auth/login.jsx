@@ -24,9 +24,7 @@ export function Login() {
     const [login] = useLoginMutation();
     const onSubmit = async (data) => {
         const res = await login(data).unwrap();
-        console.log(res);
         const role = res.role;
-        console.log(role, res);
         if (role === 'admin') {
             navigate('/admin')
         } else if (role === 'doctor') {

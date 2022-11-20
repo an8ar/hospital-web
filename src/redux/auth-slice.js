@@ -34,7 +34,6 @@ const authSlice = createSlice({
             .addMatcher(authApi.endpoints.login.matchFulfilled, (state, action) => {
                 state.accessToken = action.payload.access;
                 state.refreshToken = action.payload.refresh;
-                console.log(state.user);
                 state.user.role = action.payload.role;
                 state.user.username = action.payload.username;
                 state.user.email = action.payload.email;

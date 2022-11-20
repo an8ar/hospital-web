@@ -11,6 +11,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import Typography from '@mui/material/Typography';
+import Checkbox from '@mui/material/Checkbox';
 
 const schema = yup
     .object()
@@ -25,12 +26,17 @@ const schema = yup
         contact_number: yup.string().required(),
         address: yup.string().required(),
         caregiverPhone: yup.string().required(),
+        isMaried: yup.boolean()
+
     })
     .required();
 export function RegisterPatient() {
     const navigate = useNavigate();
     const { register: registerForm, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
+        defaultValues: {
+            isMaried: false
+        }
     });
 
     const [register] = authApi.endpoints.register.useMutation();
@@ -62,6 +68,7 @@ export function RegisterPatient() {
                         onChange={handleChange}
                         renderInput={(params) => <TextField {...params} {...registerForm("date_of_birth")} label="Date of birth" />}
                     />
+                    <Typography><Checkbox {...registerForm("isMarried")}/> Is married?</Typography>
                     <TextField error={!!errors.government_id?.message} helperText={errors.government_id?.message} {...registerForm("government_id")} label="Government id" variant="standard" />
                     <TextField error={!!errors.name?.message} helperText={errors.name?.message} {...registerForm("name")} label="Name" variant="standard" />
                     <TextField error={!!errors.surname?.message} helperText={errors.surname?.message} {...registerForm("surname")} label="Surname" variant="standard" />
