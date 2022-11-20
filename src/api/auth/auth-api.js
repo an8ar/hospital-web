@@ -1,4 +1,5 @@
 import { baseApi } from '..';
+
 export const authApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
         login: build.mutation({
@@ -6,8 +7,7 @@ export const authApi = baseApi.injectEndpoints({
                 url: 'api/token/',
                 method: 'POST',
                 body,
-            }),
-            invalidatesTags: ['Todos'],
+            })
         }),
         register: build.mutation({
             query: (body) => ({
@@ -15,9 +15,21 @@ export const authApi = baseApi.injectEndpoints({
                 method: 'POST',
                 body
             }),
-            invalidatesTags: ['Todos'],
-        })
+        }),
+        registerDoctor: build.mutation({
+            query: (body) => ({
+                url: 'api/register/',
+                method: 'POST',
+                body
+            }),
+        }),
+        registerPatient: build.mutation({
+            query: (body) => ({
+                url: 'api/register/',
+                method: 'POST',
+                body
+            }),
+        }),
     }),
-});
-
-export const {useLoginMutation, useRegisterMutation} = authApi;
+}); 
+export const { useLoginMutation, useRegisterMutation, useRegisterDoctorMutation, useRegisterPatientMutation } = authApi;

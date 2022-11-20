@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { authApi } from '../api/auth/auth-api';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import decode from 'jwt-decode';
+
 const persistConfig = {
     key: 'auth',
     storage,
@@ -11,7 +11,11 @@ const persistConfig = {
 const initialState = {
     accessToken: null,
     refreshToken: null,
-    user: null
+    user: {
+        username: null,
+        email: null,
+        role: null
+    }
 }
 const authSlice = createSlice({
     name: 'auth',
@@ -20,16 +24,20 @@ const authSlice = createSlice({
         logoutAction(state) {
             state.accessToken = null;
             state.refreshToken = null;
-            state.user =  null;
+            state.user.username = null;
+            state.user.email=null;
+            state.user.email = null;
         },
     },
     extraReducers: (builder) => {
         builder
             .addMatcher(authApi.endpoints.login.matchFulfilled, (state, action) => {
-                const { username, email, user_id, role } = decode(action.payload.access);
                 state.accessToken = action.payload.access;
                 state.refreshToken = action.payload.refresh;
-                state.user = { username, email, user_id, role };
+                console.log(state.user);
+                state.user.role = action.payload.role;
+                state.user.username = action.payload.username;
+                state.user.email = action.payload.email;
             })
     }
 })

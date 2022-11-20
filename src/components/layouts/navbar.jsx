@@ -9,6 +9,7 @@ import { useSnackbar } from 'notistack';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutAction } from '../../redux/auth-slice';
 import { useAuth } from '../../hooks/use-auth';
+import { AdminNavbar } from './admin-navbar';
 
 export function NavBar() {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ export function NavBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Hospital UMC
           </Typography>
+          {user.role==='admin' && <AdminNavbar/>}
           {
            user && <p>{user.username}</p>
           }

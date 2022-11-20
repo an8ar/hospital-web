@@ -12,5 +12,5 @@ export const Protected = ({ children, roles = [] }) => {
         return <Navigate to="/" replace />;
     }
 
-    return children ||<Outlet />;
+    return children || <Outlet />;
 };

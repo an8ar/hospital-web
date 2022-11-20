@@ -1,6 +1,6 @@
 import { AdminPage } from './admin';
-import { RegisterDoctorPage } from './register-doctor'
-import { RegisterPatientPage } from './register-patient';
+import { RegisterDoctorPage } from './doctor/register-doctor'
+import { RegisterPatientPage } from './patient/register-patient';
 import { Route } from 'react-router-dom';
 
 

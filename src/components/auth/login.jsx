@@ -23,13 +23,22 @@ export function Login() {
     });
     const [login] = useLoginMutation();
     const onSubmit = async (data) => {
-        await login(data);
-        return (
+        const res = await login(data).unwrap();
+        console.log(res);
+        const role = res.role;
+        console.log(role, res);
+        if (role === 'admin') {
             navigate('/admin')
-        )
+        } else if (role === 'doctor') {
+            navigate('/doctor');
+        } else if (role === 'patient') {
+            navigate('/patient');
+        } else {
+            navigate('/');
+        }
+
     }
     return (
-        
         <Container sx={{ width: "350px" }} >
             <Stack spacing={2} margin={5}>
                 <TextField error={!!errors.username?.message} helperText={errors.username?.message} {...register("username")} label="username" variant="standard" />
@@ -37,6 +46,5 @@ export function Login() {
                 <Button onClick={handleSubmit(onSubmit)} variant="contained">Login</Button>
             </Stack>
         </Container>
-
     )
 }

@@ -10,24 +10,21 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
+import Typography from '@mui/material/Typography';
 
 const schema = yup
     .object()
     .shape({
-        iin: yup.string().min(8).required(),
-        email: yup.string().min(8).required(),
-        date_of_birth: yup.string().min(8).required(),
-        government_id: yup.string().min(8).required(),
-        name: yup.string().min(8).required(),
-        surname: yup.string().min(8).required(),
-        middle_name: yup.string().min(8).required(),
-        contact_number: yup.string().min(8).required(),
-        experience_in_year: yup.string().min(8).required(),
-        category: yup.string().min(8).required(),
-        degree: yup.string().min(8).required(),
-        rating: yup.string().min(8).required(),
-        address: yup.string().min(8).required(),
-        departmentId: yup.string().min(8).required(),
+        iin: yup.string().required(),
+        email: yup.string().required().email(),
+        date_of_birth: yup.string().required(),
+        government_id: yup.string().required(),
+        name: yup.string().required(),
+        surname: yup.string().required(),
+        middle_name: yup.string().required(),
+        contact_number: yup.string().required(),
+        address: yup.string().required(),
+        caregiverPhone: yup.string().required(),
     })
     .required();
 export function RegisterPatient() {
@@ -38,6 +35,7 @@ export function RegisterPatient() {
 
     const [register] = authApi.endpoints.register.useMutation();
     const onSubmit = async data => {
+        console.log(data);
         await register(data);
         return (
             navigate('/')
@@ -53,6 +51,7 @@ export function RegisterPatient() {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Container sx={{ width: "350px", display: "flex" }}>
                 <Stack spacing={2} margin={5}>
+                    <Typography>Register Patient</Typography>
                     <TextField error={!!errors.iin?.message} helperText={errors.iin?.message} {...registerForm("iin")} label="iin" variant="standard" />
                     <TextField error={!!errors.email?.message} helperText={errors.email?.message} {...registerForm("email")} label="email" variant="standard" />
                     <DesktopDatePicker
@@ -62,16 +61,14 @@ export function RegisterPatient() {
                         value={value}
                         onChange={handleChange}
                         renderInput={(params) => <TextField {...params} {...registerForm("date_of_birth")} label="Date of birth" />}
-                    /><TextField error={!!errors.government_id?.message} helperText={errors.government_id?.message} {...registerForm("government id")} label="government id" variant="standard" />
-                    <TextField error={!!errors.name?.message} helperText={errors.name?.message} {...registerForm("name")} label="name" variant="standard" />
-                    <TextField error={!!errors.surname?.message} helperText={errors.surname?.message} {...registerForm("surname")} label="surname" variant="standard" />
-                    <TextField error={!!errors.middle_name?.message} helperText={errors.middle_name?.message} {...registerForm("middle_name")} label="middle_name" variant="standard" />
-                    <TextField error={!!errors.contact_number?.message} helperText={errors.contact_number?.message} {...registerForm("contact_number")} label="contact_number" variant="standard" />
-                    <TextField error={!!errors.experience_in_year?.message} helperText={errors.experience_in_year?.message} {...registerForm("experience_in_year")} label="experience_in_year" variant="standard" />
-                    <TextField error={!!errors.category?.message} helperText={errors.category?.message} {...registerForm("category")} label="category" variant="standard" />
-                    <TextField error={!!errors.rating?.message} helperText={errors.rating?.message} {...registerForm("rating")} label="rating" variant="standard" />
-                    <TextField error={!!errors.address?.message} helperText={errors.address?.message} {...registerForm("address")} label="Nickname" variant="standard" />
-                    <TextField error={!!errors.departmentId?.message} helperText={errors.departmentId?.message} {...registerForm("departmentId")} label="Password" variant="standard" />
+                    />
+                    <TextField error={!!errors.government_id?.message} helperText={errors.government_id?.message} {...registerForm("government_id")} label="Government id" variant="standard" />
+                    <TextField error={!!errors.name?.message} helperText={errors.name?.message} {...registerForm("name")} label="Name" variant="standard" />
+                    <TextField error={!!errors.surname?.message} helperText={errors.surname?.message} {...registerForm("surname")} label="Surname" variant="standard" />
+                    <TextField error={!!errors.middle_name?.message} helperText={errors.middle_name?.message} {...registerForm("middle_name")} label="Middle_name" variant="standard" />
+                    <TextField error={!!errors.contact_number?.message} helperText={errors.contact_number?.message} {...registerForm("contact_number")} label="Contact_number" variant="standard" />
+                    <TextField error={!!errors.address?.message} helperText={errors.address?.message} {...registerForm("address")} label="Address" variant="standard" />
+                    <TextField error={!!errors.caregiverPhone?.message} helperText={errors.caregiverPhone?.message} {...registerForm("caregiverPhone")} label="Caregiver Phone" variant="standard" />
                     <Button onClick={handleSubmit((onSubmit))} variant='contained'>
                         Register
                     </Button>
