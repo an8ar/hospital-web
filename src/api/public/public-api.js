@@ -6,7 +6,12 @@ export const adminApi = baseApi.injectEndpoints({
             query: () => ({
                 url: 'api/doctors'
             })
+        }),
+        getDepartments: build.query({
+            query: ()=>({
+                url:'api/departments'
+            })
         })
     }),
 });
-export const { useGetDoctorsQuery } = adminApi;
+export const { useGetDoctorsQuery,useGetDepartmentsQuery } = adminApi;

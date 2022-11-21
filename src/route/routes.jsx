@@ -15,7 +15,7 @@ function RouterApp() {
                 <Route path='/admin/*' element={<Protected roles={['admin']}/>}>
                     {AdminRoutes}
                 </Route>
-                <Route path='/doctor' element={<DoctorPage />} />
+                <Route path='/doctor' element={ <DoctorPage />} />
                 
             </Routes>
         </BrowserRouter>
