@@ -26,7 +26,7 @@ export function Login() {
         const res = await login(data).unwrap();
         const role = res.role;
         if (role === 'admin') {
-            navigate('/admin')
+            window.location.href = "http://localhost:8000/admin";
         } else if (role === 'doctor') {
             navigate('/doctor');
         } else if (role === 'patient') {

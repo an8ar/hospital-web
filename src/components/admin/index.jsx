@@ -5,9 +5,10 @@ import axios from 'axios';
 
 export function Admin() {
     async function getDepartments(){
-        const res = await axios.get('http://127.0.0.1:8000/api/departments/',{
-        
+        const res = await axios.get('http://127.0.0.1:8000/api/doctors/',{
+            
         });
+        console.log(res);
     }
     React.useEffect(() => {
       
