@@ -1,8 +1,11 @@
 import React from 'react'
-import { HomeComponent } from '../../components/homepage/homepage'
+import { HomeComponent } from '../../components/homepage/home'
+import { MainLayout } from '../../components/layouts/main-layout'
 
 export function HomePage() {
-  return (
-    <HomeComponent/>
-  )
+    return (
+        <MainLayout>
+            <HomeComponent />
+        </MainLayout>
+    )
 }

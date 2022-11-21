@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { useSnackbar } from 'notistack';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutAction } from '../../redux/auth-slice';
-import { useAuth } from '../../hooks/use-auth';
 import { AdminNavbar } from './admin-navbar';
 
 export function NavBar() {
@@ -16,13 +15,18 @@ export function NavBar() {
   const token = useSelector((state)=>state.auth.token)
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
-  const {user, isLoggedIn} = useAuth();
+  const user = useSelector((state) => state.auth.user);
+  
 
-  function navigating() {
+
+  function navigateLogout() {
     if (token==='') {
       enqueueSnackbar("You are already logged out!", { variant: 'warning' });
     }
     dispatch(logoutAction());
+    navigate('/');
+  }
+  function navigateLogin() {
     navigate('/login');
   }
 
@@ -38,8 +42,12 @@ export function NavBar() {
           {
            user && <p>{user.username}</p>
           }
-          {isLoggedIn && <Button color="inherit" onClick={navigating
+          {user.role!==null && <Button color="inherit" onClick={navigateLogout
            }>Logout</Button>} 
+
+            {user.role===null && <Button color="inherit" onClick={navigateLogin
+           }>Login</Button>} 
+
         </Toolbar>
       </AppBar>
     </Box>

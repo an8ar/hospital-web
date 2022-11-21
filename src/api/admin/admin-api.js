@@ -2,34 +2,31 @@ import { baseApi } from '..';
 
 export const adminApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
-        login: build.mutation({
-            query: (body) => ({
-                url: 'api/token/',
-                method: 'POST',
-                body,
-            })
-        }),
-        register: build.mutation({
-            query: (body) => ({
-                url: 'api/register/',
-                method: 'POST',
-                body
-            }),
-        }),
         registerDoctor: build.mutation({
             query: (body) => ({
-                url: 'api/register/',
+                url: 'api/admin/doctor/',
                 method: 'POST',
                 body
             }),
         }),
         registerPatient: build.mutation({
             query: (body) => ({
-                url: 'api/register/',
+                url: 'api/admin/patient/',
                 method: 'POST',
                 body
             }),
         }),
+        getDoctors: build.query({
+            query: () => ({
+                url: 'api/doctors'
+            })
+        }),
+        getPatients: build.query({
+            query: () => ({
+                url: 'api/patients'
+            })
+        }),
+
     }),
-}); 
-export const {} = adminApi;
+});
+export const { useGetDoctorsQuery, useRegisterDoctorMutation, useRegisterPatientMutation, useGetPatientsQuery } = adminApi;

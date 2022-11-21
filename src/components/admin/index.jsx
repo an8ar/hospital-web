@@ -1,7 +1,20 @@
 import React from 'react'
 import { Stack } from '@mui/material';
+import axios from 'axios';
+
 
 export function Admin() {
+    async function getDepartments(){
+        const res = await axios.get('http://127.0.0.1:8000/api/departments/',{
+        
+        });
+    }
+    React.useEffect(() => {
+      
+       getDepartments();
+    }, [])
+    
+
   return (
       <Stack direction="column"
         justifyContent="center"

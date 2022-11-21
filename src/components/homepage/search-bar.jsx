@@ -1,4 +1,4 @@
-import { useState } from 'react'
+
 import IconButton from '@mui/material/IconButton'
 import SearchIcon from '@mui/icons-material/Search'
 import TextField from '@mui/material/TextField'
@@ -15,8 +15,7 @@ const specialty = [
   { name: 'Colon and Rectal Surgeons', group: 'Doctor speciality' },
 ]
 
-const SearchBar = () => {
-  const [query, setQuery] = useState('')
+export const SearchBar = () => {
 
   return (
     <Stack flexDirection="row" justifyContent="center" alignItems="center">
@@ -66,4 +65,3 @@ const SearchBar = () => {
   )
 }
 
-export default SearchBar
