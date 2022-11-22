@@ -5,6 +5,7 @@ import { LoginPage } from '../pages/auth/login'
 import { AdminRoutes } from '../pages/admin'
 import { Protected } from './protected';
 import {DoctorPage} from '../pages/doctor/doctor'
+import {PatientPage} from '../pages/patient/patient'
 
 function RouterApp() {
     return (
@@ -16,6 +17,7 @@ function RouterApp() {
                     {AdminRoutes}
                 </Route>
                 <Route path='/doctor' element={ <DoctorPage />} />
+                <Route path='/patient' element={ <PatientPage />} />
                 
             </Routes>
         </BrowserRouter>

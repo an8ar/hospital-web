@@ -1,6 +1,6 @@
 import { baseApi } from '..';
 
-export const adminApi = baseApi.injectEndpoints({
+export const publicApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
         getDoctors: build.query({
             query: () => ({
@@ -14,4 +14,4 @@ export const adminApi = baseApi.injectEndpoints({
         })
     }),
 });
-export const { useGetDoctorsQuery,useGetDepartmentsQuery } = adminApi;
+export const { useGetDoctorsQuery,useGetDepartmentsQuery } = publicApi;

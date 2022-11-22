@@ -2,7 +2,12 @@ import { baseApi } from '..';
 
 export const patientApi = baseApi.injectEndpoints({
     endpoints: (build) => ({
-        
+        getPatient: build.query({
+            query: (body) => ({
+                url: 'api/doctors',
+                body
+            })
+        }),
     }),
 }); 
-export const {} = patientApi;
+export const {useGetPatientQuery} = patientApi;

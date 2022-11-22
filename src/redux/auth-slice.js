@@ -14,7 +14,8 @@ const initialState = {
     user: {
         username: null,
         email: null,
-        role: null
+        role: null,
+        id: null,
     }
 }
 const authSlice = createSlice({
@@ -27,6 +28,7 @@ const authSlice = createSlice({
             state.user.username = null;
             state.user.email=null;
             state.user.role = null;
+            state.user.id=null;
         },
     },
     extraReducers: (builder) => {
@@ -37,6 +39,7 @@ const authSlice = createSlice({
                 state.user.role = action.payload.role;
                 state.user.username = action.payload.username;
                 state.user.email = action.payload.email;
+                state.user.id = action.payload.id;
             })
     }
 })
