@@ -1,23 +1,38 @@
 import React from 'react'
-import { SearchBar } from './search-bar'
+
 import { Box } from '@mui/system'
-import { useGetDepartmentsQuery } from '../../api/public/public-api';
-import { useGetDoctorsQuery } from '../../api/public/public-api';
+import { useGetDepartmentsQuery } from '../../api/public/public-api'
+import { Typography } from '@mui/material'
+import { useParams } from 'react-router-dom'
 
 export function HomeComponent() {
-  const { data = [] } = useGetDepartmentsQuery();
-  console.log("Tut data uzhe departments");
-  console.log(data);
-  return (
+  const {
+    data: departments,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetDepartmentsQuery()
 
-    <Box
-      sx={{
-        display: 'flex',
-        maxWidth: '800px',
-        flexDirection: 'column',
-      }}
-    >
-      <SearchBar />
+  const dep = useParams()
+
+  let content
+  if (isSuccess) {
+    content = 1
+  }
+
+  console.log(departments)
+  return (
+    <Box>
+      <Box
+        sx={{
+          display: 'flex',
+          maxWidth: '800px',
+          flexDirection: 'column',
+        }}
+      >
+        {/* <Typography>{departments[dep].name}</Typography> */}
+      </Box>
     </Box>
   )
 }
