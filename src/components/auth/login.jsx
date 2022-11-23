@@ -24,7 +24,6 @@ export function Login() {
     const [login] = useLoginMutation();
     const onSubmit = async (data) => {
         const res = await login(data).unwrap();
-        console.log(res);
         const role = res.role;
         if (role === 'admin') {
             window.location.href = "http://localhost:8000/admin";
