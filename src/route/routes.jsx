@@ -1,27 +1,29 @@
 import React from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { HomePage } from '../pages/home/home';
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { HomePage } from '../pages/home/home'
 import { LoginPage } from '../pages/auth/login'
 import { AdminRoutes } from '../pages/admin'
-import { Protected } from './protected';
-import {DoctorPage} from '../pages/doctor/doctor'
-import {PatientPage} from '../pages/patient/patient'
+import { Protected } from './protected'
+import { DoctorPage } from '../pages/doctor/doctor'
+import { PatientPage } from '../pages/patient/patient'
+
+import DepartmentPage from '../pages/home/DepartmentPage'
 
 function RouterApp() {
-    return (
-        <BrowserRouter>
-            <Routes>
-                <Route path='/' element={<HomePage />} />
-                <Route path='/login' element={<LoginPage />} />
-                <Route path='/admin/*' element={<Protected roles={['admin']}/>}>
-                    {AdminRoutes}
-                </Route>
-                <Route path='/doctor' element={ <DoctorPage />} />
-                <Route path='/patient' element={ <PatientPage />} />
-                
-            </Routes>
-        </BrowserRouter>
-    );
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/admin/*" element={<Protected roles={['admin']} />}>
+          {AdminRoutes}
+        </Route>
+        <Route path="/doctor" element={<DoctorPage />} />
+        <Route path="/patient" element={<PatientPage />} />
+        <Route path="/departments/:id" element={<DepartmentPage />} />
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
-export default RouterApp;
+export default RouterApp
