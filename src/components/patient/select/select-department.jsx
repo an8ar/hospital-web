@@ -4,7 +4,6 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { Container } from '@mui/material';
 
 export function DepartmentSelect({departments,chooseDep,setDoctorList}) {
     const [department, setDepartment] = React.useState('');
@@ -16,7 +15,7 @@ export function DepartmentSelect({departments,chooseDep,setDoctorList}) {
     };
 
     return (
-        <Container sx={{ minWidth: 120, marginTop: 5}}>
+        <Box sx={{ minWidth: 120, margin:2}}>
             <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">department</InputLabel>
                 <Select
@@ -29,6 +28,6 @@ export function DepartmentSelect({departments,chooseDep,setDoctorList}) {
                     })}
                 </Select>
             </FormControl>
-        </Container>
+        </Box>
     );
 }

@@ -5,17 +5,20 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-import { Container } from '@mui/material';
-
 export function DoctorSelect({ doctors, chooseDoc }) {
     const [doctor, setDoctor] = React.useState('');
     const handleChange = (event) => {
-        chooseDoc(event.target.value);
+        const string = event.target.value;
+        const arr = string.split(' ');
+        const name = arr[0];
+        const surname = arr[1];
+        const doctor = doctors.find(doc=> doc.name===name && doc.surname===surname);
+        chooseDoc(doctor);
         setDoctor(event.target.value);
     };
 
     return (
-        <Container sx={{ minWidth: 120, marginTop: 5 }}>
+        <Box sx={{ minWidth: 120, margin:2 }}>
             <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">doctor</InputLabel>
                 <Select
@@ -25,11 +28,12 @@ export function DoctorSelect({ doctors, chooseDoc }) {
                 >
                     { doctors.length!==0 && 
                         doctors.map(element => {
-                            return <MenuItem key={element.name} value={element.name}>{element.name}</MenuItem>
+                            const val = `${element.name} ${element.surname}`
+                            return <MenuItem key={element.id} value={val}>{element.name} {element.surname}</MenuItem>
                         })
                     }
                 </Select>
             </FormControl>
-        </Container>
+        </Box>
     );
 }

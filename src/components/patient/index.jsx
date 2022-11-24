@@ -2,17 +2,18 @@ import React from 'react'
 import { useState } from 'react';
 import { Container } from '@mui/material';
 import { useSelector } from 'react-redux';
-import { useGetPatientAppointmentsQuery } from '../../api/appointments/patient-appointments'
-import { useCreateAppointmentPatientMutation } from '../../api/appointments/create-appointment';
+import { useGetPatientAppointmentsQuery } from '../../api/appointments/appointments';
 import { useGetDepartmentsQuery } from '../../api/public/public-api';
-import { DepartmentSelect } from './select-department';
-import { DoctorSelect } from './select-doctor';
-import { Button } from '@mui/material';
-import { DateSelect } from './select-date';
-import List from '@mui/material/List';
-import { ListItem } from '@mui/material';
-import { Typography } from '@mui/material';
+import { DepartmentSelect } from './select/select-department';
+import { DoctorSelect } from './select/select-doctor';
 import { useGetDoctorsQuery } from '../../api/public/public-api';
+import Chip from '@mui/material/Chip';
+import { ListOfAppointments } from './list-appointments';
+import CircularProgress from '@mui/material/CircularProgress';
+import { DoctorCard } from './card/doctor-card';
+import { Box } from '@mui/material';
+import { ProfileInfo } from './profile/profile-info';
+import { useGetPatientQuery } from '../../api/patient/patient-api';
 
 const TIMESLOT_LIST = {
     0: '09:00-09:30',
@@ -28,43 +29,26 @@ const TIMESLOT_LIST = {
 
 
 export function Patient() {
+
     const username = useSelector(state => state.auth.user.username);
     const { data: appointments, isLoading: isAppointmentsLoading } = useGetPatientAppointmentsQuery(username);
     const { data: departments, isLoading: isDepartmentsLoading } = useGetDepartmentsQuery();
-    const { data: doctors } = useGetDoctorsQuery();
-    console.log("Doctors:",doctors);
-
-    const [choosedDepartment, setChoosedDepartment] = useState('');//
+    const { data: doctors, isLoading: isDoctorLoading } = useGetDoctorsQuery();
+    const { data: patientInfo, isLoading: isPatientInfoLoading } = useGetPatientQuery(username);
+    const [choosedDepartment, setChoosedDepartment] = useState('');
     const [doctorList, setDoctorList] = useState('');
-    const [choosedDoctor, setChoosedDoctor] = useState('');//
-    const [choosedDate, setChoosedDate] = useState('');
-    const user = useSelector(state => state.auth.user);
-    console.log("User: ", user);
-    console.log("Appointments:", appointments);
-    function makeAppointment() {
-        console.log(choosedDepartment, choosedDoctor, choosedDate)
-
-    }
+    const [choosedDoctor, setChoosedDoctor] = useState({});
     const appointmentsList = [];
-    if (isAppointmentsLoading || isDepartmentsLoading) {
+    if (isAppointmentsLoading || isDepartmentsLoading || isDoctorLoading || isPatientInfoLoading) {
         return (
-            <div>Is Loading...</div>
+            <CircularProgress />
         )
     }
-    if (appointments.length === 0) {
-
-        return (
-            <Container>
-                You have 0 appointments
-            </Container>
-        )
-    }
-    const list = appointments.map(
+    appointments.forEach(
         elem => {
-            doctors.map(element => {
+            doctors.forEach(element => {
                 if (element.id === elem.doctor) {
                     const time_slot = elem.timeslot
-                    console.log("Time Slot:",TIMESLOT_LIST[time_slot]);
                     appointmentsList.push({
                         name: element.name,
                         surname: element.surname,
@@ -74,29 +58,30 @@ export function Patient() {
                     })
                 }
             });
-            console.log("appointmentList: ",appointmentsList)
         }
     )
+    const bool = Object.keys(choosedDoctor).length !== 0 && choosedDepartment !== ''
     return (
         <Container>
-
-            <Typography>My appointments</Typography>
-            <List>
-                {appointments.length === 0 && <ListItem>No appointments...</ListItem> }
-                {appointmentsList.length !== 0 && appointmentsList.map(element=>{
-                    const timeslot=element.timeslot;
-
-                    return <ListItem key={element.name}>{element.name} {element.surname} {element.date} at {element.timeslot}</ListItem>
-                }
-                    ) }
-            </List>
-            <Typography>Make an appointment</Typography>
-            <DepartmentSelect departments={departments} chooseDep={setChoosedDepartment} setDoctorList={setDoctorList} ></DepartmentSelect>
-            <DoctorSelect doctors={doctorList} chooseDoc={setChoosedDoctor}></DoctorSelect>
-            <DateSelect setChoosedDate={setChoosedDate}></DateSelect>
-
-            <Button onClick={makeAppointment}> Make an appointment</Button>
-
+            <ProfileInfo user={patientInfo}></ProfileInfo>
+            <Chip label="My appointments" variant="outlined" />
+            <ListOfAppointments list={appointmentsList}></ListOfAppointments>
+            <Chip label="Make an appointment" variant="outlined" />
+            <Box sx={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: "center",
+                margin: 2,
+            }}><Box sx={{display: "flex"}}>
+                    <DepartmentSelect departments={departments} chooseDep={setChoosedDepartment} setDoctorList={setDoctorList} ></DepartmentSelect>
+                    {
+                        choosedDepartment && <DoctorSelect doctors={doctorList} chooseDoc={setChoosedDoctor}></DoctorSelect>
+                    }
+                </Box>
+            </Box>
+            {
+                bool && <DoctorCard doctor={choosedDoctor} setChoosedDepartment={setChoosedDepartment} setChoosedDoctor={setChoosedDoctor}></DoctorCard>
+            }
         </Container>
 
     )

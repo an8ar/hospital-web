@@ -12,15 +12,6 @@ export const publicApi = baseApi.injectEndpoints({
         url: 'api/departments',
       }),
     }),
-    getDepartment: build.query({
-      query: (body) => ({
-        url: `api/departments/${body}`,
-      }),
-    }),
   }),
 })
-export const {
-  useGetDoctorsQuery,
-  useGetDepartmentsQuery,
-  useGetDepartmentQuery,
-} = publicApi
+export const { useGetDoctorsQuery,useGetDepartmentsQuery } = publicApi

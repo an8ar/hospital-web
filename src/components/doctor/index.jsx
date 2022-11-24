@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux';
 import Container from '@mui/material/Container';
 
-import {useGetDoctorAppointmentsQuery} from '../../api/appointments/doctor-appointment'
+import { useGetDoctorAppointmentsQuery } from '../../api/appointments/appointments';
 
 
 
@@ -10,7 +10,7 @@ import {useGetDoctorAppointmentsQuery} from '../../api/appointments/doctor-appoi
 export function Doctor() {
     const username = useSelector(state => state.auth.user.username);
     
-    const { data, isLoading } = useGetDoctorAppointmentsQuery(username);
+    const { data } = useGetDoctorAppointmentsQuery(username);
     console.log(data);
     return (
     <Container sx={{marginTop: 5, fontSize: 20}}>

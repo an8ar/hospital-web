@@ -8,8 +8,6 @@ import { useNavigate } from 'react-router-dom'
 import { useSnackbar } from 'notistack'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutAction } from '../../redux/auth-slice'
-import { Navbar } from '../homepage/Navbar'
-import { SearchBar } from '../homepage/SearchBar'
 
 export function NavBar() {
   const dispatch = useDispatch()
@@ -36,9 +34,6 @@ export function NavBar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Hospital UMC
           </Typography>
-
-          <Navbar />
-          <SearchBar />
           {user && <p>{user.username}</p>}
           {user.role !== null && (
             <Button color="inherit" onClick={navigateLogout}>
