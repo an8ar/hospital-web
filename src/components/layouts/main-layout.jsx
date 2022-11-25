@@ -1,6 +1,6 @@
 import { Stack } from '@mui/material'
 import React from 'react'
-import { NavBar } from './navbar'
+import { NavBar } from './navbar/navbar'
 
 export function MainLayout({ children }) {
   return (
