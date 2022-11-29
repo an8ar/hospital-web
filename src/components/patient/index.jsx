@@ -72,16 +72,18 @@ export function Patient() {
                 flexDirection: 'row',
                 justifyContent: "center",
                 margin: 2,
-            }}><Box sx={{display: "flex"}}>
+            }}>
+                <Box sx={{display:"flex", flexDirection:"column"}}>
                     <DepartmentSelect departments={departments} chooseDep={setChoosedDepartment} setDoctorList={setDoctorList} ></DepartmentSelect>
                     {
                         choosedDepartment && <DoctorSelect doctors={doctorList} chooseDoc={setChoosedDoctor}></DoctorSelect>
                     }
                 </Box>
+
+                {
+                    bool && <DoctorCard doctor={choosedDoctor} setChoosedDepartment={setChoosedDepartment} setChoosedDoctor={setChoosedDoctor}></DoctorCard>
+                }
             </Box>
-            {
-                bool && <DoctorCard doctor={choosedDoctor} setChoosedDepartment={setChoosedDepartment} setChoosedDoctor={setChoosedDoctor}></DoctorCard>
-            }
         </Container>
 
     )

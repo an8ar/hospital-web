@@ -21,7 +21,7 @@ export function SelectDepartment({ departments }) {
                 sx={{ color: "white", border: "none" }}
                 onChange={handleChange}
             >
-                {departments.map(element => {
+                  { departments!==undefined && departments.map(element => {
                     return <MenuItem key={element.name} value={element.name}>{element.name}</MenuItem>
                 })}
             </Select>

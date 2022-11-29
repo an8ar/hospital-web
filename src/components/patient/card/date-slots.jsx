@@ -6,9 +6,10 @@ import { useGetAvailableSlotQuery } from '../../../api/appointments/appointments
 import Button from '@mui/material/Button';
 import { Stack } from '@mui/system';
 import { useSelector } from 'react-redux'
-import { useCreateAppointmentMutation} from '../../../api/appointments/appointments'
-
-
+import { useCreateAppointmentMutation } from '../../../api/appointments/appointments'
+import Modal from '@mui/material/Modal';
+import { Alert } from '@mui/material';
+import {Grid} from '@mui/material';
 
 function toFormateDate(date) {
   let day = date.getDate();
@@ -35,7 +36,7 @@ const TIMESLOT_LIST = {
   8: '17:00-17:30',
 }
 
-export function BasicTabs({ doctor,setChoosedDepartment,setChoosedDoctor }) {
+export function BasicTabs({ doctor, setChoosedDepartment, setChoosedDoctor }) {
   const [value, setValue] = React.useState(0);
   const [createAppointment] = useCreateAppointmentMutation();
   var dateArr = [];
@@ -49,6 +50,10 @@ export function BasicTabs({ doctor,setChoosedDepartment,setChoosedDoctor }) {
   };
   const finalDate = dateArr[value];
   const { data = [], isLoading } = useGetAvailableSlotQuery({ username: doctor.slug, date: finalDate })
+  const [open, setOpen] = React.useState(false);
+  const [choosedTimeSlot, setChosedTimeSlot] = React.useState('');
+  const handleOpen = (e) => { setOpen(true); setChosedTimeSlot(e.target.value) }
+  const handleClose = () => setOpen(false);
   if (isLoading) {
     <h1>isLoading...</h1>
   }
@@ -56,13 +61,14 @@ export function BasicTabs({ doctor,setChoosedDepartment,setChoosedDoctor }) {
   async function handleClick(e) {
     setChoosedDepartment('');
     setChoosedDoctor({});
+    setOpen(false);
     await createAppointment({
       date: finalDate,
-      timeslot: e.target.value,
+      timeslot: choosedTimeSlot,
       doctor: doctor.id,
       patient: patientId,
     });
-    
+
   }
 
 
@@ -75,12 +81,42 @@ export function BasicTabs({ doctor,setChoosedDepartment,setChoosedDoctor }) {
           }
         </Tabs>
       </Box>
-      <Stack direction="row" spacing={2}>
-        {data.map(id => {
-          return <Button variant="contained" value={id} key={id} onClick={handleClick}>{TIMESLOT_LIST[id]}</Button>
-        })}
-      </Stack>
 
+      <Stack direction="row" spacing={2}>
+        <Grid container spacing={1}>
+          {data.map(id => {
+            return <Grid item xs={2}>
+              <Button variant="contained" value={id} key={id} onClick={(e) => handleOpen(e)}>{TIMESLOT_LIST[id]}</Button>
+            </Grid>
+          })}
+        </Grid>
+      </Stack>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="Are you confirming the appointment"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 400,
+          bgcolor: 'background.paper',
+          border: '2px solid #000',
+          boxShadow: 24,
+          p: 4,
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "row",
+        }}>
+          <Alert>Are you confirming the appointment!</Alert>
+          <Button variant="contained" size='small' onClick={handleClick}>Confirm</Button>
+        </Box>
+
+
+      </Modal>
     </Box>
   );
 }

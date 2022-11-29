@@ -8,9 +8,10 @@ export const Protected = ({ children, roles = [] }) => {
         return <Navigate to="/login" replace />;
     }
     const isAllowed = roles.length === 0  || roles.includes(user.role);
+    console.log("Roles:", roles);
     if(!isAllowed){
+        console.log("Protected");
         return <Navigate to="/" replace />;
     }
-
     return children || <Outlet />;
 };

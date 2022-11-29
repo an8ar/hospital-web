@@ -29,40 +29,39 @@ export function NavBar() {
     navigate('/')
   }
   function navigateLogin() {
+    enqueueSnackbar('Almaz Loh', { variant: 'warning' })
     navigate('/login')
   }
-  function navigateUserPage(){
+  function navigateUserPage() {
     navigate(`/${user.role}`)
   }
 
   return (
     <Box >
-      <AppBar position="static" >
-        <Toolbar sx={{ display: "flex", }}>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+      <AppBar position="static" sx={{ bgcolor: "green" }} >
+        <Toolbar sx={{ display: "flex" }}>
+          <Typography variant="h6" component="div" sx={{ cursor: "pointer",flexGrow: 1}} onClick={() => navigate('/')}>
             Hospital UMC
           </Typography>
-          <Box sx={{ flexGrow: 1 }}>
+          <Box  sx={{display: "flex", flexDirection: "row"}}>
+            {/* <Box sx={{ flexGrow: 1 }}>
             <SelectDepartment departments={departments} ></SelectDepartment>
-          </Box>
-          <Box sx={{ flexGrow: 0, display: "flex", justifyContent: "end" }}>
+          </Box> */}
             {user.username && <Button color="inherit" onClick={navigateUserPage}>{user.username}</Button>}
             {user.role !== null && (
-              <Button color="inherit"  onClick={navigateLogout}>
-                <Typography >
+
+              <Typography sx={{ flexGrow: 0 }}>
+                <Button color="inherit" onClick={navigateLogout}>
                   Logout
-                </Typography>
+                </Button>
+              </Typography>
+            )}
+            {user.role === null && (
+              <Button color="inherit" onClick={navigateLogin} sx={{ flexGrow: 0 }}>
+                Login
               </Button>
             )}
           </Box>
-
-
-
-          {user.role === null && (
-            <Button color="inherit" onClick={navigateLogin} sx={{ flexGrow: 1 }}>
-              Login
-            </Button>
-          )}
         </Toolbar>
       </AppBar>
     </Box>

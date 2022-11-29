@@ -22,7 +22,7 @@ export const appointmentsApi = baseApi.injectEndpoints({
                 method: 'POST',
                 body,
             }),
-            invalidatesTags: ['Appointments'],
+            invalidatesTags: ['Appointments', 'Timeslots'],
         }),
         getDoctorAppointments: build.query({
             query: (body) => ({
@@ -39,14 +39,21 @@ export const appointmentsApi = baseApi.injectEndpoints({
                     date: body.date
                 }
             }),
-            invalidatesTags: ['Appointments'],
+            providesTags: (result) =>
+                result
+                    ? [
+                        ...result.map(({ id }) => ({ type: 'Appointments', id })),
+                        { type: 'Timeslots', id: 'LIST' },
+                    ]
+                    : [{ type: 'Timeslots', id: 'LIST' }],
         }),
         deleteAppointment: build.mutation({
             query: (body) => ({
                 url: `/api/appointments/${body}/`,
                 method: "DELETE",
             }),
-            invalidatesTags: ['Appointments'],
+            invalidatesTags: ['Appointments', 'Timeslots'],
+
         })
 
     }),
