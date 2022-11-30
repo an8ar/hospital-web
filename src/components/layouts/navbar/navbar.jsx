@@ -8,8 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSnackbar } from 'notistack'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutAction } from '../../../redux/auth-slice'
-import { useGetDepartmentsQuery } from '../../../api/public/public-api'
-import { SelectDepartment } from './select-department'
+// import { useGetDepartmentsQuery } from '../../../api/public/public-api'
 
 export function NavBar() {
   const dispatch = useDispatch()
@@ -17,10 +16,8 @@ export function NavBar() {
   const navigate = useNavigate()
   const { enqueueSnackbar } = useSnackbar()
   const user = useSelector((state) => state.auth.user)
-  const { data: departments, isLoading: isDepLoading } = useGetDepartmentsQuery();
-  if (isDepLoading) {
-    return <h1>Is loading</h1>
-  }
+  // const { data: departments, isLoading: isDepLoading } = useGetDepartmentsQuery();
+ 
   function navigateLogout() {
     if (token === '') {
       enqueueSnackbar('You are already logged out!', { variant: 'warning' })
@@ -29,7 +26,6 @@ export function NavBar() {
     navigate('/')
   }
   function navigateLogin() {
-    enqueueSnackbar('Almaz Loh', { variant: 'warning' })
     navigate('/login')
   }
   function navigateUserPage() {

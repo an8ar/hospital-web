@@ -54,6 +54,7 @@ export const SearchBar = () => {
       return {
         name: `${doctor.name} ${doctor.surname}`,
         group: 'Doctors',
+        url: `/departments/${doctor.name.toLowerCase()}`,
       }
     })
   )

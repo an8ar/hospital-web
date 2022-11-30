@@ -8,9 +8,9 @@ import { Link } from 'react-router-dom';
 
 export function Footer() {
     return (
-        <AppBar position="static" sx={{ color: "black", position: "fixed",bgcolor: "#E0E0E0", width: "100%" }} >
+        <AppBar position="static" sx={{ color: "black",bgcolor: "#E0E0E0", width: "100%" }} >
             <Box sx={{ display: "flex", flexDirection: "row",justifyContent:"center", margin: 3 }}>
-                <Box sx={{flexGrow: 1}}>
+                <Box sx={{flex: 1}}>
                     <Link to="/about">About</Link>
                 </Box>
                 <Box>
