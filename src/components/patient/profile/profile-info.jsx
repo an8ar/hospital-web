@@ -7,7 +7,6 @@ import { Typography } from '@mui/material';
 
 export function ProfileInfo({user}) {
   const initals = user.name.charAt(0)+ user.surname.charAt(0);
-  console.log(user);
   return (
     <Box sx={{display:"flex", flexDirection:"row", margin: 3}}>
       <Avatar sx={{ width: 150, height: 150, bgcolor: deepPurple[500] }} >{initals}</Avatar>

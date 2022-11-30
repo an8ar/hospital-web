@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { authReducer } from "./auth-slice";
 import { authApi } from "../api/auth/auth-api";
 import { appointmentsApi } from "../api/appointments/appointments";
+import { appointmentUnloggedReducer } from "./appointment-unlogged";
 import {
     persistStore,
     FLUSH,
@@ -17,6 +18,7 @@ export const store = configureStore({
         auth: authReducer,
         [authApi.reducerPath]: authApi.reducer,
         [appointmentsApi.reducerPath]: appointmentsApi.reducer,
+        appointmentUnlogged: appointmentUnloggedReducer,
     },
     middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

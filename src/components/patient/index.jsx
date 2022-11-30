@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
 import { Container } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useGetPatientAppointmentsQuery } from '../../api/appointments/appointments';
 import { useGetDepartmentsQuery } from '../../api/public/public-api';
 import { DepartmentSelect } from './select/select-department';
@@ -14,6 +14,13 @@ import { DoctorCard } from './card/doctor-card';
 import { Box } from '@mui/material';
 import { ProfileInfo } from './profile/profile-info';
 import { useGetPatientQuery } from '../../api/patient/patient-api';
+import { Modal } from '@mui/material';
+import { useCreateAppointmentMutation } from '../../api/appointments/appointments';
+import { Alert } from '@mui/material';
+import { Button } from '@mui/material';
+import { dropAppointment } from '../../redux/appointment-unlogged';
+import { useSnackbar } from 'notistack'
+
 
 const TIMESLOT_LIST = {
     0: '09:00-09:30',
@@ -35,14 +42,43 @@ export function Patient() {
     const { data: departments, isLoading: isDepartmentsLoading } = useGetDepartmentsQuery();
     const { data: doctors, isLoading: isDoctorLoading } = useGetDoctorsQuery();
     const { data: patientInfo, isLoading: isPatientInfoLoading } = useGetPatientQuery(username);
+    const [createAppointment] = useCreateAppointmentMutation();
     const [choosedDepartment, setChoosedDepartment] = useState('');
     const [doctorList, setDoctorList] = useState('');
     const [choosedDoctor, setChoosedDoctor] = useState({});
+    const [open, setOpen] = React.useState(false);
+    const handleClose = () => setOpen(false);
     const appointmentsList = [];
+    const unloggedAppointment = useSelector(state => state.appointmentUnlogged.appointment);
+    const userId = useSelector(state => state.auth.user.id);
+    const dispatch = useDispatch();
+    const { enqueueSnackbar } = useSnackbar()
+    React.useEffect(() => {
+        if (unloggedAppointment.doctor) {
+            setOpen(true);
+        }
+    }, [unloggedAppointment])
     if (isAppointmentsLoading || isDepartmentsLoading || isDoctorLoading || isPatientInfoLoading) {
         return (
             <CircularProgress />
         )
+    }
+
+
+
+    async function handleClick() {
+        setOpen(false);
+        const appointment = {
+            date: unloggedAppointment.date,
+            timeslot: unloggedAppointment.timeslot,
+            doctor: unloggedAppointment.doctor,
+            patient: userId,
+        }
+
+        await createAppointment(appointment);
+        dispatch(dropAppointment());
+        enqueueSnackbar('Appointment made succesfully', { variant: 'success' })
+
     }
     appointments.forEach(
         elem => {
@@ -73,7 +109,7 @@ export function Patient() {
                 justifyContent: "center",
                 margin: 2,
             }}>
-                <Box sx={{display:"flex", flexDirection:"column"}}>
+                <Box sx={{ display: "flex", flexDirection: "column" }}>
                     <DepartmentSelect departments={departments} chooseDep={setChoosedDepartment} setDoctorList={setDoctorList} ></DepartmentSelect>
                     {
                         choosedDepartment && <DoctorSelect doctors={doctorList} chooseDoc={setChoosedDoctor}></DoctorSelect>
@@ -84,6 +120,38 @@ export function Patient() {
                     bool && <DoctorCard doctor={choosedDoctor} setChoosedDepartment={setChoosedDepartment} setChoosedDoctor={setChoosedDoctor}></DoctorCard>
                 }
             </Box>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="Are you confirming the appointment"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: 400,
+                    bgcolor: 'background.paper',
+                    border: '2px solid #000',
+                    boxShadow: 24,
+                    p: 4,
+                    display: "flex",
+                    justifyContent: "center",
+                    flexDirection: "column",
+                }}>
+                    <Alert>You started to make an appointment before login, Are you confirming appointment?</Alert>
+                    <Box sx={{ margin: 5 }}>
+                        <Button variant="contained" size='small' onClick={handleClick}>Yes</Button>
+                        <Button variant="contained" size='small' onClick={() => {
+                            setOpen(false);
+                            dispatch(dropAppointment())
+                            enqueueSnackbar('You did not do appointed', { variant: 'warning' })
+                        }}
+                        >No</Button>
+                    </Box>
+                </Box>
+            </Modal>
         </Container>
 
     )

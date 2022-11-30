@@ -12,8 +12,8 @@ import { Box } from '@mui/material';
 import { useState } from 'react';
 
 export function ListOfAppointments({ list }) {
+  
   const [deleteAppointment] = useDeleteAppointmentMutation();
-
   const handleToggle = (event) => {
     console.log(event.target.value);
     deleteAppointment(event.target.value);

@@ -59,6 +59,7 @@ export function BasicTabs({ doctor, setChoosedDepartment, setChoosedDoctor }) {
   }
   const patientId = useSelector(state => state.auth.user.id)
   async function handleClick(e) {
+    
     setChoosedDepartment('');
     setChoosedDoctor({});
     setOpen(false);
@@ -85,7 +86,7 @@ export function BasicTabs({ doctor, setChoosedDepartment, setChoosedDoctor }) {
       <Stack direction="row" spacing={2}>
         <Grid container spacing={1}>
           {data.map(id => {
-            return <Grid item xs={2}>
+            return <Grid key={id} item xs={2}>
               <Button variant="contained" value={id} key={id} onClick={(e) => handleOpen(e)}>{TIMESLOT_LIST[id]}</Button>
             </Grid>
           })}
