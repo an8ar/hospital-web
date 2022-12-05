@@ -8,6 +8,7 @@ import { PatientPage } from '../pages/patient/patient'
 import {AboutPage} from '../pages/about'
 import {DepartmentPage} from '../pages/department'
 import {ServicesPage} from '../pages/services'
+import {DoctorCard} from '../pages/doctor-card'
 
 function RouterApp() {
   return (
@@ -20,6 +21,8 @@ function RouterApp() {
         <Route path="/patient" element={<Protected roles={['patient']}><PatientPage /></Protected>} />
         <Route path='/departments/:id' element={<DepartmentPage/>}></Route>  
         <Route path='/services/:id' element={<ServicesPage/>}></Route>
+        <Route path='/doctor/:id' element={<DoctorCard/>}></Route>
+        
         
       </Routes>
     </BrowserRouter>

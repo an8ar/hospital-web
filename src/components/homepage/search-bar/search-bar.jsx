@@ -45,7 +45,7 @@ export const SearchBar = () => {
     )
   }
   console.log("SerL:",services);
-  const specialty = departments.map((item) => {
+  let specialty = departments.map((item) => {
     return {
       name: item.name,
       group: 'Department',
@@ -54,14 +54,24 @@ export const SearchBar = () => {
   })
   let searchOptions = specialty
   searchOptions = searchOptions.concat(
-    doctors.map((doctor) => {
+    services.map((service) => {
       return {
-        name: `${doctor.name} ${doctor.surname}`,
+        name: `${service.name}`,
         group: 'Services',
-        url: `/services/${doctor.slug}`,
+        url: `/services/${service.slug}`,
       }
     })
   )
+  searchOptions = searchOptions.concat(
+    doctors.map((doctor)=>{
+      console.log("Fucking doc: ",doctor);
+      return {
+        name: `${doctor.name} ${doctor.surname}`,
+        group: 'Doctors',
+        url: `/doctor/${doctor.slug}`,
+      }
+    })
+  );
 
   return (
     <Stack flexDirection="column" justifyContent="center" alignItems="center">
