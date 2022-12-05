@@ -26,8 +26,8 @@ export const Department = () => {
                 <Typography variant="h5">Department: {departments?.name}</Typography>
             </Box>
             <Box>
-                <Typography variant="h5">Services: {departments?.name}</Typography>
                 <Grid container spacing={1} sx={{ padding: 1 }}>
+                    asd
                     {departments.services.map((service) => {
                         return (
                             <Grid item xs={4} key={service.id}>

@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import { useGetServicesQuery } from '../../api/public/public-api'
 import { DoctorGrid } from './doctor-grid'
 import { Typography } from '@mui/material'
+import { Grid } from "@mui/material";
 
 export function ServicesInDepartment() {
 
@@ -18,7 +19,9 @@ export function ServicesInDepartment() {
     }
     let content;
     content = serviceData.doctor.map((doctor) => (
-        <DoctorGrid service={serviceData.name} doctor={doctor} key={doctor.id} />
+        <Grid item xs={4} key={doctor.id}>
+            <DoctorGrid service={serviceData.name} doctor={doctor} key={doctor.id} />
+        </Grid>
     ))
     if (content.length === 0) {
         return (
@@ -29,6 +32,6 @@ export function ServicesInDepartment() {
             </Box>)
     }
     return (
-        <Box sx={{ display: 'flex', justifyContent: "space-between" }}>{content}</Box>
+        <Grid container spacing={2}>{content}</Grid>
     )
 }
