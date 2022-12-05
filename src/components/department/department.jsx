@@ -27,7 +27,6 @@ export const Department = () => {
             </Box>
             <Box>
                 <Grid container spacing={1} sx={{ padding: 1 }}>
-                    asd
                     {departments.services.map((service) => {
                         return (
                             <Grid item xs={4} key={service.id}>
@@ -55,5 +54,5 @@ const Item = styled(Paper)(({ theme }) => ({
     color: 'white',
     margin: 10,
     borderRadius: 10,
-    fontSize: 23,
+    fontSize: 13,
 }));

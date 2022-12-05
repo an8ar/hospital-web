@@ -74,7 +74,7 @@ export function Patient() {
             doctor: unloggedAppointment.doctor,
             patient: userId,
         }
-
+        console.log(appointment);
         await createAppointment(appointment);
         dispatch(dropAppointment());
         enqueueSnackbar('Appointment made succesfully', { variant: 'success' })
@@ -140,13 +140,13 @@ export function Patient() {
                     justifyContent: "center",
                     flexDirection: "column",
                 }}>
-                    <Alert>You started to make an appointment before login, Are you confirming appointment?</Alert>
+                    <Alert>You started to make an appointment in homepage, Are you confirming your appointment?</Alert>
                     <Box sx={{ margin: 5 }}>
                         <Button variant="contained" size='small' onClick={handleClick}>Yes</Button>
                         <Button variant="contained" size='small' onClick={() => {
                             setOpen(false);
                             dispatch(dropAppointment())
-                            enqueueSnackbar('You did not do appointed', { variant: 'warning' })
+                            enqueueSnackbar('You did not make appointment', { variant: 'error' })
                         }}
                         >No</Button>
                     </Box>

@@ -10,7 +10,8 @@ import { Alert } from '@mui/material';
 import { Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import {makeAppointment} from '../../../redux/appointment-unlogged'
+import { makeAppointment } from '../../../redux/appointment-unlogged'
+import { useState } from 'react';
 
 function toFormateDate(date) {
     let day = date.getDate();
@@ -53,23 +54,27 @@ export function DateSlots({ doctor }) {
     const finalDate = dateArr[value];
     const { data = [], isLoading } = useGetAvailableSlotQuery({ username: doctor.slug, date: finalDate })
     const [open, setOpen] = React.useState(false);
-    const [choosedTimeSlot, setChosedTimeSlot] = React.useState('');
-    const handleOpen = (e) => { setOpen(true); setChosedTimeSlot(e.target.value) }
+    const handleOpen = (e) => {
+        setOpen(true);
+        const submit = {
+            date: finalDate,
+            timeslot: e.target.value,
+            doctor: doctor.id,
+            patient: patientId,
+        }
+        console.log(submit);
+        dispatch(makeAppointment(submit));
+        if (username !== null) {
+            navigate("/patient");
+        }
+    }
     const handleClose = () => setOpen(false);
+    const username = useSelector(state => state.auth.user.username);
     if (isLoading) {
         <h1>isLoading...</h1>
     }
     const patientId = useSelector(state => state.auth.user.id)
     async function handleClick(e) {
-
-        const submit = {
-            date: finalDate,
-            timeslot: choosedTimeSlot,
-            doctor: doctor.id,
-            patient: patientId,
-        }
-        dispatch(makeAppointment(submit));
-        //to save in a state
         navigate('/login');
     }
 
@@ -88,7 +93,7 @@ export function DateSlots({ doctor }) {
                 <Grid container spacing={1}>
                     {data.map(id => {
                         return <Grid item xs={2} key={id}>
-                            <Button variant="contained" value={id} key={id} onClick={(e) => handleOpen(e)}>{TIMESLOT_LIST[id]}</Button>
+                            <Button variant="contained" value={id} key={id} onClick={handleOpen}>{TIMESLOT_LIST[id]}</Button>
                         </Grid>
                     })}
                 </Grid>

@@ -14,7 +14,7 @@ export const SearchBar = () => {
   const [options, setOptions] = useState([])
   const loading = open && options.length === 0
   const { data: departments, isLoading: isDepLoadin } = useGetDepartmentsQuery();
-  const {data: services, isloading: isServicesLoading} = useGetAllServicesQuery();
+  const {data: services, isLoading: isServicesLoading} = useGetAllServicesQuery();
   const { data: doctors, isLoading } = useGetDoctorsQuery();
   
 
