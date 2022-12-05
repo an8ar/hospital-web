@@ -7,13 +7,16 @@ import Link from '@mui/material/Link'
 import { useState, useEffect } from 'react'
 import { useGetDoctorsQuery } from '../../../api/public/public-api'
 import { useGetDepartmentsQuery } from '../../../api/public/public-api'
+import { useGetAllServicesQuery } from '../../../api/public/public-api'
 
 export const SearchBar = () => {
   const [open, setOpen] = useState(false)
   const [options, setOptions] = useState([])
   const loading = open && options.length === 0
   const { data: departments, isLoading: isDepLoadin } = useGetDepartmentsQuery();
-  const { data: doctors, isLoading } = useGetDoctorsQuery()
+  const {data: services, isloading: isServicesLoading} = useGetAllServicesQuery();
+  const { data: doctors, isLoading } = useGetDoctorsQuery();
+  
 
   useEffect(() => {
     let active = true
@@ -36,11 +39,12 @@ export const SearchBar = () => {
       setOptions([])
     }
   }, [open])
-  if (isLoading || isDepLoadin) {
+  if (isLoading || isDepLoadin || isServicesLoading) {
     return (
       <h1>Loading...</h1>
     )
   }
+  console.log("SerL:",services);
   const specialty = departments.map((item) => {
     return {
       name: item.name,
@@ -53,8 +57,8 @@ export const SearchBar = () => {
     doctors.map((doctor) => {
       return {
         name: `${doctor.name} ${doctor.surname}`,
-        group: 'Doctors',
-        url: `/departments/${doctor.name.toLowerCase()}`,
+        group: 'Services',
+        url: `/services/${doctor.slug}`,
       }
     })
   )

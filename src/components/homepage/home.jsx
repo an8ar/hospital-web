@@ -2,6 +2,7 @@ import React from 'react'
 import { Box } from '@mui/system'
 import { CaurouselComponent } from './caurousel/caurousel';
 import { SearchBar } from './search-bar/search-bar';
+import { DepartmentsCard } from './departments-card';
 
 export function HomeComponent() {
 
@@ -11,6 +12,7 @@ export function HomeComponent() {
         <CaurouselComponent />
       </Box>
       <SearchBar></SearchBar>
+      <DepartmentsCard/>
     </Box>
   )
 }

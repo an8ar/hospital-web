@@ -4,14 +4,12 @@ import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import { BasicTabs } from "./date-slots";
 
-export function DoctorCard({doctor,setChoosedDepartment,setChoosedDoctor}) {
-    
+export function DoctorCard({ doctor, setChoosedDepartment, setChoosedDoctor }) {
     return (
-        
         <div>
             <Grid container spacing={1} sx={{ padding: 1 }}>
                 <Grid item xs={4}>
-                    <Item>xs=4</Item>
+                    <Item><img style={{ width: '100%' }} alt={doctor.name} src={`https://csci361.pythonanywhere.com/${doctor.photo}`}></img></Item>
                 </Grid>
                 <Grid item xs={8}>
                     <div>

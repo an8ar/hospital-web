@@ -4,7 +4,7 @@ export const baseApi = createApi({
     reducerPath: "baseApi",
     tagTypes: ["Appointments", "Timeslots"],
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:8000',
+        baseUrl: 'https://csci361.pythonanywhere.com',
         prepareHeaders: (headers, { getState }) => {
             const token = getState().auth.accessToken;
             if (token) {

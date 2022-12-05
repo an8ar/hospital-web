@@ -21,7 +21,17 @@ export const publicApi = baseApi.injectEndpoints({
       query: () => ({
         url: "api/patients/"
       })
-    })
+    }),
+    getServices: build.query({
+      query: (id) => ({
+        url: `api/services/${id}/`
+      })
+    }),
+    getAllServices: build.query({
+      query: (id) => ({
+        url: `api/services/`
+      })
+    }),
   }),
 })
-export const { useGetDoctorsQuery, useGetDepartmentsQuery, useGetDepartmentQuery, useGetPatientsQuery } = publicApi
+export const { useGetAllServicesQuery,useGetDoctorsQuery, useGetDepartmentsQuery, useGetDepartmentQuery, useGetPatientsQuery, useGetServicesQuery } = publicApi

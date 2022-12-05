@@ -10,6 +10,7 @@ import { useCreateAppointmentMutation } from '../../../api/appointments/appointm
 import Modal from '@mui/material/Modal';
 import { Alert } from '@mui/material';
 import {Grid} from '@mui/material';
+import { useSnackbar } from 'notistack'
 
 function toFormateDate(date) {
   let day = date.getDate();
@@ -52,6 +53,7 @@ export function BasicTabs({ doctor, setChoosedDepartment, setChoosedDoctor }) {
   const { data = [], isLoading } = useGetAvailableSlotQuery({ username: doctor.slug, date: finalDate })
   const [open, setOpen] = React.useState(false);
   const [choosedTimeSlot, setChosedTimeSlot] = React.useState('');
+  const { enqueueSnackbar } = useSnackbar()
   const handleOpen = (e) => { setOpen(true); setChosedTimeSlot(e.target.value) }
   const handleClose = () => setOpen(false);
   if (isLoading) {
@@ -69,6 +71,7 @@ export function BasicTabs({ doctor, setChoosedDepartment, setChoosedDoctor }) {
       doctor: doctor.id,
       patient: patientId,
     });
+    enqueueSnackbar('Appointment made succesfully', { variant: 'success' })
 
   }
 

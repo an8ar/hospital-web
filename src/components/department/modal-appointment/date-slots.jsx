@@ -2,7 +2,7 @@ import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import { useGetAvailableSlotQuery } from '../../api/appointments/appointments';
+import { useGetAvailableSlotQuery } from '../../../api/appointments/appointments';
 import Button from '@mui/material/Button';
 import { Stack } from '@mui/system';
 import Modal from '@mui/material/Modal';
@@ -10,7 +10,7 @@ import { Alert } from '@mui/material';
 import { Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import {makeAppointment} from '../../redux/appointment-unlogged'
+import {makeAppointment} from '../../../redux/appointment-unlogged'
 
 function toFormateDate(date) {
     let day = date.getDate();
@@ -37,7 +37,7 @@ const TIMESLOT_LIST = {
     8: '17:00-17:30',
 }
 
-export function BasicTabs({ doctor }) {
+export function DateSlots({ doctor }) {
     const [value, setValue] = React.useState(0);
     const dispatch = useDispatch()
     const navigate = useNavigate();

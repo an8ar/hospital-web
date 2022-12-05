@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent'
 import { Stack } from '@mui/system'
 import {Modal} from '@mui/material'
 import { useState } from 'react'
-import {DoctorCard} from './doctor-card';
+import {DoctorCard} from './modal-appointment/doctor-card';
 
 const style = {
     position: 'absolute',
@@ -18,7 +18,7 @@ const style = {
     p: 4,
   };
   
-export const DoctorGrid = ({ doctor, department }) => {
+export const DoctorGrid = ({ doctor, service }) => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -79,11 +79,8 @@ export const DoctorGrid = ({ doctor, department }) => {
                             alignItems="center"
                             sx={{ marginBottom: '10px', borderBottom: '1px solid lightgray' }}
                         >
-                            <Typography component="div" variant="h4">
-                                {doctor.middle_name}
-                            </Typography>
                             <Typography component="div" variant="h5">
-                                {doctor.surname} {doctor.surname}
+                                {doctor.name} {doctor.surname}
                             </Typography>
                         </Stack>
                         <Stack flexDirection="row" justifyContent="space-between">
@@ -92,14 +89,14 @@ export const DoctorGrid = ({ doctor, department }) => {
                                 color="text.secondary"
                                 component="span"
                             >
-                                Department
+                                Service
                             </Typography>
                             <Typography
                                 variant="subtitle1"
                                 color="text.secondary"
                                 component="span"
                             >
-                                {department}
+                                {service}
                             </Typography>
                         </Stack>
                         <Stack flexDirection="row" justifyContent="space-between">

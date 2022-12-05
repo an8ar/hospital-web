@@ -6,7 +6,8 @@ import { Protected } from './protected'
 import { DoctorPage } from '../pages/doctor/doctor'
 import { PatientPage } from '../pages/patient/patient'
 import {AboutPage} from '../pages/about'
-import {DepartmentPage} from '../pages/department-page'
+import {DepartmentPage} from '../pages/department'
+import {ServicesPage} from '../pages/services'
 
 function RouterApp() {
   return (
@@ -17,8 +18,8 @@ function RouterApp() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/doctor" element={<Protected roles={['doctor']}><DoctorPage /></Protected>} />
         <Route path="/patient" element={<Protected roles={['patient']}><PatientPage /></Protected>} />
-        <Route path='/departments/:id' element={<DepartmentPage/>}></Route>
-        <Route path='/doctor' element={<DepartmentPage/>}></Route>
+        <Route path='/departments/:id' element={<DepartmentPage/>}></Route>  
+        <Route path='/services/:id' element={<ServicesPage/>}></Route>
         
       </Routes>
     </BrowserRouter>
